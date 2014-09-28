@@ -24,13 +24,13 @@ public class FileSink extends AbstractSink implements Configurable
     @Override
     public void start()
     {
-        logger.info("FileSink.start()");
+        logger.debug("FileSink.start()");
     }
 
     @Override
     public void stop()
     {
-        logger.info("FileSink.stop()");
+        logger.debug("FileSink.stop()");
     }
 
     @Override
@@ -44,15 +44,15 @@ public class FileSink extends AbstractSink implements Configurable
         try {
             Event event = ch.take();
             if (event == null) {
-                logger.info("No new event was found");
+                logger.debug("No new event was found");
                 retval = Status.BACKOFF;
             } else {
-                logger.info("New events arrived");
+                logger.debug("New events arrived");
                 Date now = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat(this._pathTemplate);
                 String path = dateFormat.format(now);
 
-                logger.info("path=" + path);
+                logger.debug("path=" + path);
 /*
                 FileWriter writer = new FileWriter(path, true);
                 writer.write(event.getBody());
