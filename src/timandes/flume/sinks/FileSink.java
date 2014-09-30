@@ -3,6 +3,7 @@ package timandes.flume.sinks;
 import org.apache.flume.*;
 import org.apache.flume.conf.Configurable;
 import org.apache.flume.sink.AbstractSink;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.FileOutputStream;
 import java.util.Date;
@@ -53,6 +54,9 @@ public class FileSink extends AbstractSink implements Configurable
                 String path = dateFormat.format(now);
 
                 logger.debug("path=" + path);
+
+                this._createParentDirs(path);
+
 /*
                 FileWriter writer = new FileWriter(path, true);
                 writer.write(event.getBody());
@@ -83,4 +87,19 @@ public class FileSink extends AbstractSink implements Configurable
         return retval;
     }
 
+    /**
+     * Create parent dirs of given path
+     */
+    private void _createParentDirs(String path) throws Exception
+    {
+        File file = new File(path);
+        String dirPath = file.getParent();
+        
+        File dir = new File(dirPath);
+        if (dir.exists())
+            return;
+
+        if (!dir.mkdirs())
+            throw new Exception("Fail to create parent dirs for path '" + path + "'");
+    }
 }
