@@ -31,7 +31,7 @@ public class FileSink extends AbstractSink implements Configurable
     @Override
     public void configure(Context context)
     {
-        this._pathTemplate = context.getString("pathTemplate", "'/var/log/'YYYYMMdd'.log'");
+        this._pathTemplate = context.getString("pathTemplate", "'/var/log/'yyyyMMdd'.log'");
         this._batchSize = context.getInteger("batchSize", this._defaultBatchSize);
     }
 
